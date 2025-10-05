@@ -43,7 +43,7 @@ public class SecurityConfig {
                 // ADMIN can add/delete products, manage orders, view all orders
                 .pathMatchers(HttpMethod.POST, "/productmicroservice/products/**").hasRole("ADMIN")
                 .pathMatchers(HttpMethod.DELETE, "/productmicroservice/products/**").hasRole("ADMIN")
-                .pathMatchers(HttpMethod.GET, "/productmicroservice/orders/**").hasRole("ADMIN")
+                .pathMatchers(HttpMethod.GET, "/ordersmicroservice/orders/**").hasRole("ADMIN")
 
                 // All other routes require authentication
                 .anyExchange().authenticated()

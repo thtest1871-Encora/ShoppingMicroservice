@@ -18,33 +18,41 @@ import com.example.demo.model.Order;
 @RequestMapping("/orders")
 public class OrderController {
 
-	private final OrderService orderService;
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
-    }
+	// Injects the OrderService dependency using constructor injection (recommended for immutability and testing)
+		private final OrderService orderService;
 
-    @GetMapping
-    public List<Order> getOrders(){
-    	return orderService.getOrders();
-    }
-    
-    @GetMapping("/{orderId}")
-    public Order getOrderById(@PathVariable("orderId") Long orderId){
-    	return orderService.getOrderById(orderId);
-    }
-    
-    @GetMapping("/customer/{customerId}")
-    public List<Order> getOrderByCustomerId(@PathVariable("customerId") Long customerId){
-    	return orderService.getOrderByCustomerId(customerId);
-    }
-    
-    @PostMapping
-    public Order placeOrder(@RequestBody OrderRequest request) {
-        return orderService.placeOrder(request);
-    }
-    
-    @DeleteMapping("/{orderId}")
-    public String deleteOrder(@PathVariable("orderId") Long orderId) {
-    	return orderService.deleteOrderById(orderId);
-    }
+	    // Constructor for initializing OrderService
+	    public OrderController(OrderService orderService) {
+	        this.orderService = orderService;
+	    }
+
+	    // Retrieves and returns a list of all orders
+	    @GetMapping
+	    public List<Order> getOrders(){
+	    	return orderService.getOrders();
+	    }
+	    
+	    // Retrieves a specific order by its ID
+	    @GetMapping("/{orderId}")
+	    public Order getOrderById(@PathVariable("orderId") Long orderId){
+	    	return orderService.getOrderById(orderId);
+	    }
+	    
+	    // Retrieves all orders placed by a specific customer using their customer ID
+	    @GetMapping("/customer/{customerId}")
+	    public List<Order> getOrderByCustomerId(@PathVariable("customerId") Long customerId){
+	    	return orderService.getOrderByCustomerId(customerId);
+	    }
+	    
+	    // Places a new order using the details provided in the request body (OrderRequest DTO)
+	    @PostMapping
+	    public Order placeOrder(@RequestBody OrderRequest request) {
+	        return orderService.placeOrder(request);
+	    }
+	    
+	    // Deletes an existing order by its ID and returns a confirmation message
+	    @DeleteMapping("/{orderId}")
+	    public String deleteOrder(@PathVariable("orderId") Long orderId) {
+	    	return orderService.deleteOrderById(orderId);
+	    }
 }

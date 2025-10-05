@@ -29,57 +29,57 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 	
-	@GetMapping("/test")
-	public String test() {
-		return "testing";
-	}
-	
-	@GetMapping
-	public List<Product> getProducts()
-	{
-		return productService.getAllProducts();
-		
-	}
+	// Fetches and returns all products from the database
+		@GetMapping
+		public List<Product> getProducts()
+		{
+			return productService.getAllProducts();
+		}
 
-	@GetMapping("/{proId}")
-	public Optional<Product> getProductById(@PathVariable("proId") long proId){
-		return productService.getProductById(proId);
-	}
-	
-	@PostMapping
-	public ResponseEntity<Product> addProduct(@RequestBody Product pro){
-		Product savedProduct = productService.addProduct(pro);
-		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(savedProduct);	
-	}
-	
-	@DeleteMapping("/{productId}")
-	public String deleteProduct(@PathVariable("productId") Long productId) {
-		productService.deleteProduct(productId);
-		return "Deleted Successfully";
-	}
-	
-	@PutMapping("/{id}/decreaseQuantity")
-	public Product decreaseQuantity(@PathVariable("id") Long id, @RequestParam("count") Integer count) {
-		return productService.updateQuantity(id, -1 * count);
-	}
-	
-	@PutMapping("/{id}/increaseQuantity")
-	public Product increaseQuantity(@PathVariable("id") Long id, @RequestParam("count") Integer count) {
-		return productService.updateQuantity(id, count);
-	}
-	
-	
-	@GetMapping("/filter")
-	public List<Product> getProductByPriceLessThan(@RequestParam("price") Double price)
-	{
-		return productService.getProductByPriceLessThan(price);
-	}
-	
-	
-	@GetMapping("/filtername")
-	public List<Product> getProductByName(@RequestParam("name") String name)
-	{
-		return productService.filterByName(name);
-	}
+		// Fetches a specific product by its ID using path variable
+		@GetMapping("/{proId}")
+		public Optional<Product> getProductById(@PathVariable("proId") long proId){
+			return productService.getProductById(proId);
+		}
+		
+		// Adds a new product to the database and returns the created product with HTTP 201 status
+		@PostMapping
+		public ResponseEntity<Product> addProduct(@RequestBody Product pro){
+			Product savedProduct = productService.addProduct(pro);
+			return ResponseEntity.status(HttpStatus.CREATED)
+					.body(savedProduct);	
+		}
+		
+		// Deletes a product by its ID and returns a success message
+		@DeleteMapping("/{productId}")
+		public String deleteProduct(@PathVariable("productId") Long productId) {
+			productService.deleteProduct(productId);
+			return "Deleted Successfully";
+		}
+		
+		// Decreases the quantity of a product by a specified count
+		@PutMapping("/{id}/decreaseQuantity")
+		public Product decreaseQuantity(@PathVariable("id") Long id, @RequestParam("count") Integer count) {
+			return productService.updateQuantity(id, -1 * count);
+		}
+		
+		// Increases the quantity of a product by a specified count
+		@PutMapping("/{id}/increaseQuantity")
+		public Product increaseQuantity(@PathVariable("id") Long id, @RequestParam("count") Integer count) {
+			return productService.updateQuantity(id, count);
+		}
+		
+		// Filters and returns products that have a price less than the given value
+		@GetMapping("/filter")
+		public List<Product> getProductByPriceLessThan(@RequestParam("price") Double price)
+		{
+			return productService.getProductByPriceLessThan(price);
+		}
+		
+		// Filters and returns products whose names match the given parameter
+		@GetMapping("/filtername")
+		public List<Product> getProductByName(@RequestParam("name") String name)
+		{
+			return productService.filterByName(name);
+		}
 }
